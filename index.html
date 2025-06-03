@@ -172,7 +172,34 @@
       return;
     }
 
-    const blob = window.htmlDocx.asBlob('<html><body>' + texto.replace(/\n/g, '<br>') + '</body></html>');
+    const blob = window.htmlDocx.asBlob('<html><body>' + texto.replace(/\n/g, '<br>') + '
+<script>
+  // Mostrar nome do arquivo carregado
+  document.querySelectorAll('input[type="file"]').forEach(input => {
+    input.addEventListener('change', function () {
+      const msg = this.nextElementSibling;
+      if (this.files.length > 0) {
+        msg && (msg.innerText = '📂 Arquivo selecionado: ' + this.files[0].name);
+      }
+    });
+  });
+
+  // Função para limpar todos os campos
+  function limparCampos() {
+    document.querySelectorAll('input[type="file"], textarea').forEach(el => {
+      el.value = '';
+    });
+    document.querySelectorAll('#msgPdf, #msgDocx, #ocrOutput, #docxOutput').forEach(el => {
+      el.innerText = '';
+    });
+  }
+</script>
+
+<div class="text-center my-5">
+  <button class="btn btn-outline-secondary" onclick="limparCampos()">🧹 Limpar Todos os Campos</button>
+</div>
+</body>
+</html>');
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
     link.download = 'documento.docx';
@@ -180,5 +207,32 @@
     msg.innerText = '✅ Documento DOCX baixado!';
   }
 </script>
+
+<script>
+  // Mostrar nome do arquivo carregado
+  document.querySelectorAll('input[type="file"]').forEach(input => {
+    input.addEventListener('change', function () {
+      const msg = this.nextElementSibling;
+      if (this.files.length > 0) {
+        msg && (msg.innerText = '📂 Arquivo selecionado: ' + this.files[0].name);
+      }
+    });
+  });
+
+  // Função para limpar todos os campos
+  function limparCampos() {
+    document.querySelectorAll('input[type="file"], textarea').forEach(el => {
+      el.value = '';
+    });
+    document.querySelectorAll('#msgPdf, #msgDocx, #ocrOutput, #docxOutput').forEach(el => {
+      el.innerText = '';
+    });
+  }
+</script>
+
+<div class="text-center my-5">
+  <button class="btn btn-outline-secondary" onclick="limparCampos()">🧹 Limpar Todos os Campos</button>
+</div>
 </body>
+
 </html>
