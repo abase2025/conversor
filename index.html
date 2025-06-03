@@ -114,10 +114,12 @@
 
       for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
         const page = await pdf.getPage(pageNum);
-        const viewport = page.getViewport({ scale: 2 });
+        const viewport = page.getViewport({ scale: 3 });
         const canvas = document.createElement("canvas");
         const context = canvas.getContext("2d");
         canvas.height = viewport.height;
+        canvas.style.display = 'none';
+        document.body.appendChild(canvas);
         canvas.width = viewport.width;
 
         await page.render({ canvasContext: context, viewport: viewport }).promise;
@@ -141,7 +143,8 @@
         });
       }
 
-      output.innerText = resultadoFinal.trim();
+      document.body.removeChild(canvas);
+      output.innerText = resultadoFinal.trim() || '⚠️ Nenhum texto detectado. Verifique se o PDF contém imagens.';
     };
     reader.readAsArrayBuffer(file);
   }
